@@ -2,6 +2,18 @@
 //Requiring the file system module for adding a new Json file to save & read data from it
 const fs = require("fs");
 
+//Requiring the chalk module for Styling our terminal messages
+const chalk = require("chalk");
+
+//The main styles in our terminal
+
+const success = chalk.bold.black.bgGreen;
+const warning = chalk.black.bgRed;
+const viewId = chalk.black.bgMagenta;
+const viewName = chalk.black.bgYellow;
+const viewGrade = chalk.black.bgRedBright;
+const viewComments = chalk.black.bgCyanBright;
+
 /*****************************************************************************************************************************************************/
 //Add New Students
 
@@ -19,9 +31,9 @@ const addStudents = (id, studentName, grade, comment) => {
       comment,
     });
     saveStudents(students);
-    console.log("New Student has been added successfully");
+    console.log(success("New Student has been added successfully"));
   } else {
-    console.log("You are trying to add an existing id number");
+    console.log(warning("You are trying to add an existing id number"));
   }
 };
 
@@ -34,7 +46,7 @@ const deleteStudent = (id) => {
     return student.id !== id;
   });
   saveStudents(studentsToSave);
-  console.log("You have been deleted the Student Successfully");
+  console.log(success("You have been deleted the Student Successfully"));
 };
 
 /*****************************************************************************************************************************************************/
@@ -46,13 +58,13 @@ const viewStudent = (id) => {
     return student.id == id;
   });
   if (studentToFind) {
-    console.log(studentToFind);
-    console.log(studentToFind.id);
-    console.log(studentToFind.studentName);
-    console.log(studentToFind.grade);
-    console.log(studentToFind.comment);
+    console.log(studentToFind); // I have a question here related to weather app also remember
+    console.log(viewId(studentToFind.id));
+    console.log(viewName(studentToFind.studentName));
+    console.log(viewGrade(studentToFind.grade));
+    console.log(viewComments(studentToFind.comment));
   } else {
-    console.log("Sorry we can't find Student with this id");
+    console.log(warning("Sorry we can't find Student with this id"));
   }
 };
 
@@ -64,10 +76,10 @@ const viewAllStudents = () => {
   students != null
     ? students.forEach((student) => {
         console.log(student);
-        console.log(student.id);
-        console.log(student.studentName);
-        console.log(student.grade);
-        console.log(student.comment);
+        console.log(viewId(student.id));
+        console.log(viewName(student.studentName));
+        console.log(viewGrade(student.grade));
+        console.log(viewComments(student.comment));
       })
     : console.log("We don't have any Students to show right now");
 };
